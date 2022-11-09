@@ -1,14 +1,11 @@
 import './App.css';
-import { lazy, Suspense } from 'react';
-const Component = lazy(() => import('./Component'));
-const AnotherComponent = lazy(() => import('./AnotherComponent'));
+import Component from './Component';
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <div>
       <Component />
-      <AnotherComponent />
-    </Suspense>
+    </div>
   );
 }
 
