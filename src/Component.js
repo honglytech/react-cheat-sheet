@@ -1,21 +1,61 @@
 import React from "react";
-import styles from "./Component.module.css";
 
-function Component() {
-    return (
-      <>
-        <div style={{ color: "yellow" }}>
-          <p>Line one</p>
-        </div>
-        <div style={{ color: "red" }}>
-          <p>Line two</p>
-        </div>
+// function Component(props) {
+//     return (
+//       <>
+//         <h1>
+//           Name: {props.name} Age: {props.age}
+//         </h1>
+//       </>
+//     );
+//   }
 
-        <div className={styles.greenText}>
-          <h1>CSS Modules</h1>
-        </div>
+// Destructured props
+// function Component({name, age}) {
+//   return (
+//     <>
+//       <h1>
+//         Name: {name} Age: {age}
+//       </h1>
+//     </>
+//   )
+// }
+
+// children
+// function Component({ children }) {
+//   return (
+//     <>
+//       <h1>
+//         Name: {children}
+//       </h1>
+//     </>
+//   )
+// }
+
+// Default props - JavaScript
+// function Component({ name = "Mike" }) {
+//   return (
+//     <>
+//       <h1>
+//         Name: {name}
+//       </h1>
+//     </>
+//   )
+// }
+
+// Default props - React
+function Component({ name }) {
+  return (
+    <>
+      <h1>
+        Name: {name}
+      </h1>
     </>
-    );
-  }
+  )
+}
+
+Component.defaultProps = {
+  name: "Hong"
+}
   
-  export default Component;
+export default Component;
