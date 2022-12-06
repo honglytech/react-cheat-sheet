@@ -1,44 +1,33 @@
-import { useState } from "react";
-import Child from "./Child";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [name, setName] = useState("");
+  const [count, setCount] = useState(0);
+  // return (
+  //   <div>
+  //     <p>You've clicked {count} times</p>
+  //     <button onClick={() => setCount(count + 1)}>Click me</button>
+  //   </div>
+  // );
 
-  const clickHandler = () => alert("You clicked me!");
+  useEffect(() => {
+    console.log("Initialised");
 
-  const passArgument = (message) => alert(message);
+    // clean up function runs before the component is unmounted
+    return () => {
+      console.log("Cleaned up");
+    };
+  }, []); // empty array: run during mount only
 
-  const eventObject = (event) => console.log(event.target.value);
+  useEffect(() => {
+    // document.title = `You clicked ${count} times`;
+    console.log(`You clicked ${count} times`);
+  }, [count]);
+  // array with count: run every time `count` changes
 
-  console.log(name);
   return (
-    <>
-      <h1>Hello</h1>
-      <button onClick={clickHandler}>onClick Event</button>
-
-      <button onClick={() => alert("Inline onClick!")}>Inline</button>
-
-      <button
-        onClick={() => passArgument("Passing text via argument to the handler")}
-      >
-        Click me
-      </button>
-
-      <button value={"test"} onClick={eventObject}>
-        event Object
-      </button>
-
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <Child
-        data="Pass data from Parent to Child (button)"
-        onChildClick={() => alert("Parent to Child")}
-      />
-    </>
+    <div>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
   );
 }
 
