@@ -1,8 +1,8 @@
-function Child({ data, onChildClick }) {
+function Child() {
   return (
-    <>
-      <button onClick={onChildClick}>{data}</button>
-    </>
+    <div>
+      <p>The current theme is:</p>
+    </div>
   );
 }
 

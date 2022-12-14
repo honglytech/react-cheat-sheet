@@ -1,33 +1,124 @@
-import { useState, useEffect } from "react";
+import { useState, createContext, useContext } from "react";
+
+// const ThemeContext = createContext(null);
+
+// function App() {
+//   return (
+//     <ThemeContext.Provider value="dark">
+//       <Component />
+//     </ThemeContext.Provider>
+//   );
+// }
+
+// function Component() {
+//   const theme = useContext(ThemeContext);
+//   return (
+//     <div>
+//       <p>The current theme is: {theme}</p>
+//     </div>
+//   );
+// }
+
+/////////
+
+// using useState
+// function App() {
+//   const [user, setUser] = useState("John");
+
+//   return (
+//     <>
+//       <h1>{`Hello ${user}!`}</h1>
+//       <Component2 user={user} />
+//     </>
+//   );
+// }
+
+// function Component2({ user }) {
+//   return (
+//     <>
+//       <h1>Component 2</h1>
+//       <Component3 user={user} />
+//     </>
+//   );
+// }
+
+// function Component3({ user }) {
+//   return (
+//     <>
+//       <h1>Component 3</h1>
+//       <Component4 user={user} />
+//     </>
+//   );
+// }
+
+// function Component4({ user }) {
+//   return (
+//     <>
+//       <h1>Component 4</h1>
+//       <Component5 user={user} />
+//     </>
+//   );
+// }
+
+// function Component5({ user }) {
+//   return (
+//     <>
+//       <h1>Component 5</h1>
+//       <h2>{`Hello ${user} again!`}</h2>
+//     </>
+//   );
+// }
+
+/////////
+
+const UserContext = createContext();
 
 function App() {
-  const [count, setCount] = useState(0);
-  // return (
-  //   <div>
-  //     <p>You've clicked {count} times</p>
-  //     <button onClick={() => setCount(count + 1)}>Click me</button>
-  //   </div>
-  // );
-
-  useEffect(() => {
-    console.log("Initialised");
-
-    // clean up function runs before the component is unmounted
-    return () => {
-      console.log("Cleaned up");
-    };
-  }, []); // empty array: run during mount only
-
-  useEffect(() => {
-    // document.title = `You clicked ${count} times`;
-    console.log(`You clicked ${count} times`);
-  }, [count]);
-  // array with count: run every time `count` changes
+  const [user, setUser] = useState("John");
 
   return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
-    </div>
+    <UserContext.Provider value={user}>
+      <h1>{`Hello ${user}!`}</h1>
+      <Component2 />
+    </UserContext.Provider>
+  );
+}
+
+function Component2() {
+  return (
+    <>
+      <h1>Component 2</h1>
+      <Component3 />
+    </>
+  );
+}
+
+function Component3() {
+  return (
+    <>
+      <h1>Component 3</h1>
+      <Component4 />
+    </>
+  );
+}
+
+function Component4() {
+  return (
+    <>
+      <h1>Component 4</h1>
+      <Component5 />
+    </>
+  );
+}
+
+function Component5() {
+  const user = useContext(UserContext);
+
+  return (
+    <>
+      <h1>Component 5</h1>
+      <h2>{`Hello ${user} again!`}</h2>
+    </>
   );
 }
 
