@@ -1,44 +1,31 @@
-import { useReducer } from "react";
-
-const initialState = { count: 0 };
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "increment":
-      return { count: state.count + 1 };
-    case "decrement":
-      return { count: state.count - 1 };
-    default:
-      throw new Error();
-  }
-}
+import { useState, useCallback } from "react";
+import Todos from "./Todos";
 
 function App() {
-  // const [count, dispatch] = useReducer((state, action) => {
-  //   switch (action) {
-  //     case "increment":
-  //       return state + 1;
-  //     case "decrement":
-  //       return state - 1;
-  //     default:
-  //       throw new Error();
-  //   }
-  // }, 0);
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
 
-  // return (
-  //   <div>
-  //     <p>{count}</p>
-  //     <button onClick={() => dispatch("increment")}>+</button>
-  //     <button onClick={() => dispatch("decrement")}>-</button>
-  //   </div>
-  // );
+  const increment = () => {
+    setCount((c) => c + 1);
+  };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const addTodo = () => {
+  //   setTodos((t) => [...t, "New Todo"]);
+  // };
+
+  // Use the useCallback Hook to prevent the Todos component from re-rendering if not neccessary
+  const addTodo = useCallback(() => {
+    setTodos((t) => [...t, "New Todo"]);
+  }, []);
+
   return (
     <>
-      Count: {state.count}
-      <button onClick={() => dispatch({ type: "increment" })}>+</button>
-      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <Todos todos={todos} addTodo={addTodo} />
+      <hr />
+      <div>
+        Count: {count}
+        <button onClick={increment}>+</button>
+      </div>
     </>
   );
 }
