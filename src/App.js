@@ -1,14 +1,18 @@
-import { useState } from "react";
-import Child from "./Child";
+import { useRef } from "react";
 
 function App() {
-  const [num, setNum] = useState(1);
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
 
   return (
-    <div>
-      <button onClick={() => setNum(num + 1)}>increment</button>
-      <Child number={num} />
-    </div>
+    <>
+      <input ref={inputRef} type="text" />
+      <button onClick={""}>Focus Input test</button>
+      <button onClick={handleClick}>Focus Input</button>
+    </>
   );
 }
 
