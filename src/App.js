@@ -1,18 +1,38 @@
-import { useRef } from "react";
+import React, { useState, useTransition } from "react";
 
 function App() {
-  const inputRef = useRef(null);
+  const [name, setName] = useState("");
+  const [lists, setLists] = useState([]);
+  const [isPending, startTransition] = useTransition();
+  const LIST_SIZE = 10000;
 
-  const handleClick = () => {
-    inputRef.current.focus();
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setName(value);
+
+    startTransition(() => {
+      const dataList = [];
+      for (let i = 0; i < LIST_SIZE; i++) {
+        dataList.push(value);
+      }
+      setLists(dataList);
+    });
   };
 
   return (
-    <>
-      <input ref={inputRef} type="text" />
-      <button onClick={""}>Focus Input test</button>
-      <button onClick={handleClick}>Focus Input</button>
-    </>
+    <div>
+      <input type="text" value={name} onChange={handleChange} />
+      {isPending ? (
+        <div>Loading...</div>
+      ) : (
+        lists.map((list) => {
+          return <div key={list}>{list}</div>;
+        })
+      )}
+      {/* {lists.map((list) => {
+        return <div key={list}>{list}</div>;
+      })} */}
+    </div>
   );
 }
 
