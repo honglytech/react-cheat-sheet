@@ -1,17 +1,22 @@
-import { useMemo } from "react";
+import { memo } from "react";
 
-function Child({ number }) {
-  // Use the useMemo hook to memoize the result of the expensive calculation
-  const memoizedDoubleNumber = useMemo(() => {
-    console.log("calculating doubleNumber");
-    return number * 2;
-  }, [number]);
+const Child = memo(function SlowList({ text }) {
+  console.log("[ARTIFICIALLY SLOW] Rendering 250 <SlowItem />");
 
-  return (
-    <div>
-      <h1>Number: {number}</h1>
-      <h1>Double Number: {memoizedDoubleNumber}</h1>
-    </div>
-  );
+  let items = [];
+  for (let i = 0; i < 250; i++) {
+    items.push(<SlowItem key={i} text={text} />);
+  }
+  return <ul>{items}</ul>;
+});
+
+function SlowItem({ text }) {
+  let startTime = performance.now();
+  while (performance.now() - startTime < 1) {
+    // Do nothing for 1 ms per item to emulate extremely slow code
+  }
+
+  return <li className="item">Text: {text}</li>;
 }
+
 export default Child;

@@ -1,38 +1,14 @@
-import React, { useState, useTransition } from "react";
+import { useState, useDeferredValue } from "react";
+import Child from "./Child.js";
 
 function App() {
-  const [name, setName] = useState("");
-  const [lists, setLists] = useState([]);
-  const [isPending, startTransition] = useTransition();
-  const LIST_SIZE = 10000;
-
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setName(value);
-
-    startTransition(() => {
-      const dataList = [];
-      for (let i = 0; i < LIST_SIZE; i++) {
-        dataList.push(value);
-      }
-      setLists(dataList);
-    });
-  };
-
+  const [text, setText] = useState("");
+  const deferredText = useDeferredValue(text);
   return (
-    <div>
-      <input type="text" value={name} onChange={handleChange} />
-      {isPending ? (
-        <div>Loading...</div>
-      ) : (
-        lists.map((list) => {
-          return <div key={list}>{list}</div>;
-        })
-      )}
-      {/* {lists.map((list) => {
-        return <div key={list}>{list}</div>;
-      })} */}
-    </div>
+    <>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <Child text={deferredText} />
+    </>
   );
 }
 
